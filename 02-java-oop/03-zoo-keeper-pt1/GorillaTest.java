@@ -7,7 +7,7 @@ public class GorillaTest {
         gorilla.eatBananas();
         gorilla.eatBananas();
         gorilla.climb();
-        System.out.println(gorilla.energyLevel);
+        System.out.println("Energy Level: " + gorilla.energyLevel);
     }
     
 }
