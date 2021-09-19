@@ -1,0 +1,9 @@
+@charset "ISO-8859-1";
+
+.body{
+	border: 2px solid black;
+	margin: 50px 275px;
+	padding:150px 75px 150px 250px;
+	width: 30%;
+	height: 30%;
+}
