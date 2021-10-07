@@ -1,25 +1,24 @@
-package com.tim.dojoandninjas.models;
+package com.tim.prodsandcats.models;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="dojos")
-public class Dojo {
+@Table(name="categories")
+public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,21 +29,16 @@ public class Dojo {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedAt;
 	
-	@OneToMany(mappedBy="dojo", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Ninjas> ninjas;
-
-	@PrePersist
-	protected void onCreate(){
-	this.createdAt = new Date();
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "categories_products", 
+        joinColumns = @JoinColumn(name = "category_id"), 
+        inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products;
 	
-	@PreUpdate
-	protected void onUpdate(){
-	this.updatedAt = new Date();
-	}
+	public Category() {
 	
-	public Dojo() {
-
 	}
 
 	public Long getId() {
@@ -63,6 +57,14 @@ public class Dojo {
 		this.name = name;
 	}
 
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -78,13 +80,6 @@ public class Dojo {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	public List<Ninjas> getNinjas() {
-		return ninjas;
-	}
-
-	public void setNinjas(List<Ninjas> ninjas) {
-		this.ninjas = ninjas;
-	}
+	
 	
 }
