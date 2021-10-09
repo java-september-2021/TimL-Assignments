@@ -12,5 +12,4 @@ import com.tim.prodsandcats.models.Product;
 public interface CategoryRepository extends CrudRepository<Category, Long>{
 	List<Category> findAll();
 	List<Category> findByProductsNotContains(Product product);
-	
 }
